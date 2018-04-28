@@ -8,17 +8,16 @@
     <script src="https://unpkg.com/aframe-physics-system@1.4.0/dist/aframe-physics-system.min.js"></script>
     <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
     <script>
-     var score1;
-     var score2;
-     var score3;
-	 
+   <script>
+     var bestDuck
+     
      function randomize(){
-       score1 = Math.floor(Math.random() * 10) + 1; /* creates a random number between 0 and 10 */
-       score2 = Math.floor(Math.random() * 10) + 1;
-       score3 = Math.floor(Math.random() * 10) + 1;
+       bestDuck = Math.floor(Math.random() * 10) + 1; /* creates a random number between 1 and 10 */
+       bestDuck = "duck" + bestDuck;
+       console.log(bestDuck);
      }
      window.onload = randomize;
-
+     
      AFRAME.registerComponent('game', {
        schema: {
          el: {
@@ -29,35 +28,26 @@
            default: 0
          },
        },
-
        init: function () {
          var sceneEl = document.querySelector('a-scene');
          var scoreBoard = document.querySelector('#score');
-         sceneEl.querySelector('#duck1').addEventListener('click', () => {
-           console.log("duck1");
-           console.log(score1);
-           this.data.score += score1;
-           var newScore = 'Score: \n' + this.data.score
-           scoreBoard.setAttribute('text', 'value',  newScore)
-         })
-
-         /* duck2 */
-        
-         sceneEl.querySelector('#duck2').addEventListener('click', () => {
-           console.log("duck2");
-           console.log(score2);
-           this.data.score += score2;
-           var newScore = 'Score: \n' + this.data.score
-           scoreBoard.setAttribute('text', 'value',  newScore)
-         })
-
-         sceneEl.querySelector('#duck3').addEventListener('click', () => {
-           console.log("duck3");
-           console.log(score3);
-           this.data.score += score3;
-           var newScore = 'Score: \n' + this.data.score
-           scoreBoard.setAttribute('text', 'value',  newScore)
-         })
+         
+         /* bestduck */
+         sceneEl.querySelector('.duck').addEventListener('click', (e) => {
+           var selected = e.target.getAttribute("id").toString();
+           // var lastChar = selected.substr(selected.length - 1);
+           console.log("duck selected " + selected);
+           if(selected == bestDuck){
+             console.log("winner");
+             scoreBoard.setAttribute('text', 'value',  "Congrat!\nYou win!");
+           }else{
+             scoreBoard.setAttribute('text', 'value',  "Sorry \n Wrong\n Duck");
+           }
+           
+           // this.data.score += score1;
+           // var newScore = 'Score: \n' + this.data.score
+           // scoreBoard.setAttribute('text', 'value',  newScore)
+         });
        }
      });
  </script> 
